@@ -1,4 +1,4 @@
-import streamlit as st
+ import streamlit as st
 import pickle
 import pandas as pd
 import requests
@@ -16,9 +16,10 @@ def fetch_poster(movie_id):
             return f"https://image.tmdb.org/t/p/w500/{poster_path}"
     except Exception:
         pass
+    # Fallback image if poster fails to load
     return "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500"
 
-# Load pre-calculated files and cache them in memory
+# Load pre-calculated files and cache them in memory (Lightning fast!)
 @st.cache_resource
 def load_models():
     movies_dict = pickle.load(open('movie_dict.pkl', 'rb'))
@@ -29,10 +30,10 @@ def load_models():
 try:
     movies, similarity = load_models()
 except FileNotFoundError:
-    st.error("Please run Ml.py locally first, and ensure 'movie_dict.pkl' and 'similarity.pkl' are uploaded to your GitHub repository.")
+    st.error("Please ensure 'movie_dict.pkl' and 'similarity.pkl' are uploaded to your GitHub repository.")
     st.stop()
 
-# Recommendation logic (Now lightning fast!)
+# Recommendation logic
 def recommend(movie):
     movie_index = movies[movies['title'] == movie].index[0]
     distances = similarity[movie_index]
@@ -56,16 +57,11 @@ selected_movie_name = st.selectbox(
     movies['title'].values
 )
 
- # 3. Vectorization & Similarity (Optimized to stay under GitHub's 100MB limit!)
-tfidf = TfidfVectorizer(max_features=1500, stop_words='english')
-vector = tfidf.fit_transform(new_df['tags']).toarray()
-
-# Calculate similarity and immediately convert it to float32 to save massive space
-import numpy as np
-similarity = cosine_similarity(vector).astype(np.float32)
-
-# 4. Save the pre-calculated objects
-pickle.dump(new_df.to_dict(), open('movie_dict.pkl', 'wb'))
-pickle.dump(similarity, open('similarity.pkl', 'wb'))
-
-print("Success! Generated ultra-compressed models under GitHub's limit.")
+if st.button('Get Recommendations'):
+    with st.spinner('Finding matches...'):
+        names, posters = recommend(selected_movie_name)
+        cols = st.columns(5)
+        for i in range(5):
+            with cols[i]:
+                st.text(names[i])
+                st.image(posters[i], use_container_width=True)
