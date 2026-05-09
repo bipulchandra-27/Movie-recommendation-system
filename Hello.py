@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 import requests
 
-st.set_page_config(page_title="PopcornAI Pro", layout="wide")
+st.set_page_config(page_title="CineMatch", layout="wide")
 
 API_KEY = "8265bd1679663a7ea12ac168da84d2e8"
 
@@ -94,7 +94,7 @@ def recommend(movie):
     return recommended_details
 
 # UI Header
-st.markdown("<h1 style='text-align: center; color: #E50914;'>🍿 PopcornAI Pro 🍿</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #1E90FF;'>🍿 CineMatch 🍿</h1>", unsafe_allow_html=True)
 st.write("---")
 
 selected_movie_name = st.selectbox(
