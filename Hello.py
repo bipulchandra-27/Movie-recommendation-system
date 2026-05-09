@@ -52,11 +52,10 @@ def recommend(movie):
 st.markdown("<h1 style='text-align: center; color: #1E90FF;'>CineMatch: Movie Recommender</h1>", unsafe_allow_html=True)
 st.write("---")
 
-selected_movie_name = st.selectbox,
+selected_movie_name = st.selectbox(
     "Search or select a movie you loved:",
     movies['title'].values
 )
-
 if st.button('Get Recommendations'):
     with st.spinner('Finding matches...'):
         names, posters = recommend(selected_movie_name)
