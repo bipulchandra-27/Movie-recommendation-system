@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 import requests
 
-st.set_page_config(page_title="PopcornAI", layout="wide")
+st.set_page_config(page_title="CineMatch", layout="wide")
 
 # Fetch movie poster using TMDB API
 def fetch_poster(movie_id):
@@ -49,10 +49,10 @@ def recommend(movie):
     return recommended_movies, recommended_posters
 
 # UI Header
-st.markdown("<h1 style='text-align: center; color: #E50914;'>PopcornAI: Movie Recommender</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #1E90FF;'>CineMatch: Movie Recommender</h1>", unsafe_allow_html=True)
 st.write("---")
 
-selected_movie_name = st.selectbox(
+selected_movie_name = st.selectbox,
     "Search or select a movie you loved:",
     movies['title'].values
 )
